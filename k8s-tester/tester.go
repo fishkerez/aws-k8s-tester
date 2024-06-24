@@ -24,6 +24,7 @@ import (
 	csi_ebs "github.com/aws/aws-k8s-tester/k8s-tester/csi-ebs"
 	"github.com/aws/aws-k8s-tester/k8s-tester/csrs"
 	falco "github.com/aws/aws-k8s-tester/k8s-tester/falco"
+	"github.com/aws/aws-k8s-tester/k8s-tester/falcon"
 	fluent_bit "github.com/aws/aws-k8s-tester/k8s-tester/fluent-bit"
 	jobs_echo "github.com/aws/aws-k8s-tester/k8s-tester/jobs-echo"
 	jobs_pi "github.com/aws/aws-k8s-tester/k8s-tester/jobs-pi"
@@ -33,6 +34,7 @@ import (
 	nlb_hello_world "github.com/aws/aws-k8s-tester/k8s-tester/nlb-hello-world"
 	php_apache "github.com/aws/aws-k8s-tester/k8s-tester/php-apache"
 	"github.com/aws/aws-k8s-tester/k8s-tester/secrets"
+	securecn "github.com/aws/aws-k8s-tester/k8s-tester/secureCN"
 	"github.com/aws/aws-k8s-tester/k8s-tester/stress"
 	stress_in_cluster "github.com/aws/aws-k8s-tester/k8s-tester/stress/in-cluster"
 	k8s_tester "github.com/aws/aws-k8s-tester/k8s-tester/tester"
@@ -264,6 +266,20 @@ func (ts *tester) createTesters() {
 		ts.cfg.AddOnFalco.LogWriter = ts.logWriter
 		ts.cfg.AddOnFalco.Client = ts.cli
 		ts.testers = append(ts.testers, falco.New(ts.cfg.AddOnFalco))
+	}
+	if ts.cfg.AddOnFalcon != nil && ts.cfg.AddOnFalcon.Enable {
+		ts.cfg.AddOnFalcon.Stopc = ts.stopCreationCh
+		ts.cfg.AddOnFalcon.Logger = ts.logger
+		ts.cfg.AddOnFalcon.LogWriter = ts.logWriter
+		ts.cfg.AddOnFalcon.Client = ts.cli
+		ts.testers = append(ts.testers, falcon.New(ts.cfg.AddOnFalcon))
+	}
+	if ts.cfg.AddOnSecureCN != nil && ts.cfg.AddOnSecureCN.Enable {
+		ts.cfg.AddOnSecureCN.Stopc = ts.stopCreationCh
+		ts.cfg.AddOnSecureCN.Logger = ts.logger
+		ts.cfg.AddOnSecureCN.LogWriter = ts.logWriter
+		ts.cfg.AddOnSecureCN.Client = ts.cli
+		ts.testers = append(ts.testers, securecn.New(ts.cfg.AddOnSecureCN))
 	}
 }
 

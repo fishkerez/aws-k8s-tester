@@ -24,6 +24,7 @@ import (
 	"github.com/aws/aws-k8s-tester/k8s-tester/csrs"
 	"github.com/aws/aws-k8s-tester/k8s-tester/epsagon"
 	"github.com/aws/aws-k8s-tester/k8s-tester/falco"
+	"github.com/aws/aws-k8s-tester/k8s-tester/falcon"
 	fluent_bit "github.com/aws/aws-k8s-tester/k8s-tester/fluent-bit"
 	jobs_echo "github.com/aws/aws-k8s-tester/k8s-tester/jobs-echo"
 	jobs_pi "github.com/aws/aws-k8s-tester/k8s-tester/jobs-pi"
@@ -34,6 +35,7 @@ import (
 	nlb_hello_world "github.com/aws/aws-k8s-tester/k8s-tester/nlb-hello-world"
 	php_apache "github.com/aws/aws-k8s-tester/k8s-tester/php-apache"
 	"github.com/aws/aws-k8s-tester/k8s-tester/secrets"
+	securecn "github.com/aws/aws-k8s-tester/k8s-tester/secureCN"
 	"github.com/aws/aws-k8s-tester/k8s-tester/splunk"
 	"github.com/aws/aws-k8s-tester/k8s-tester/stress"
 	stress_in_cluster "github.com/aws/aws-k8s-tester/k8s-tester/stress/in-cluster"
@@ -116,6 +118,14 @@ func createDoc() string {
 
 	b.WriteByte('\n')
 	b.WriteString(es.writeDoc(k8s_tester.ENV_PREFIX+falco.Env()+"_", &falco.Config{}))
+	totalTestCases++
+
+	b.WriteByte('\n')
+	b.WriteString(es.writeDoc(k8s_tester.ENV_PREFIX+falcon.Env()+"_", &falcon.Config{}))
+	totalTestCases++
+
+	b.WriteByte('\n')
+	b.WriteString(es.writeDoc(k8s_tester.ENV_PREFIX+securecn.Env()+"_", &securecn.Config{}))
 	totalTestCases++
 
 	b.WriteByte('\n')

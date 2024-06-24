@@ -45,6 +45,12 @@ gofmt -s -w ./csrs
 goimports -w ./falco
 gofmt -s -w ./falco
 
+goimports -w ./secureCN
+gofmt -s -w ./secureCN
+
+goimports -w ./falcon
+gofmt -s -w ./falcon
+
 goimports -w ./fluent-bit
 gofmt -s -w ./fluent-bit
 
